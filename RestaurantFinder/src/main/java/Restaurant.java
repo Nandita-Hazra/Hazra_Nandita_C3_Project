@@ -11,7 +11,7 @@ public class Restaurant {
     public LocalTime openingTime; // opening time of the restaurant
     public LocalTime closingTime; // closing time of the restaurant
 
-    // creating dynamic array for the food item(s) in menu
+    // List interface for the food item(s) in menu
     private List<Item> menu = new ArrayList<Item>();
 
     // creating constructor of Restaurant class
@@ -58,7 +58,7 @@ public class Restaurant {
     }
 
     // method to get the food menu
-    public List<Item> getMenu() {
+    public getMenu() {
 
         return menu;
 
@@ -70,11 +70,11 @@ public class Restaurant {
      */
     private Item findItemByName(String itemName){
 
-        // for each loop to iterate forward in dynamic menu array
+        // for each loop to iterate forward in List interface
         for(Item item: menu) {
 
-            // check condition by food name
-            if(item.getName().equals(itemName))
+            // check condition using food name
+            if (item.getName().equals(itemName))
 
                 return item;
 
@@ -83,6 +83,8 @@ public class Restaurant {
         return null;
 
     }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     /* method to add food details
      * in menu by admin
@@ -102,12 +104,18 @@ public class Restaurant {
 
         Item itemToBeRemoved = findItemByName(itemName);
 
-        if (itemToBeRemoved == null)
+        if (itemToBeRemoved == null) {
+
             throw new ItemNotFoundException(itemName);
+
+        }
+
 
         menu.remove(itemToBeRemoved);
 
     }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     /* method to print
      * restaurant details and

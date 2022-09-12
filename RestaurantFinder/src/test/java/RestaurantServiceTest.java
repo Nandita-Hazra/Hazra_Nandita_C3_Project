@@ -13,7 +13,7 @@ class RestaurantServiceTest {
     Restaurant objRestaurant;
     RestaurantService objRestaurantService;
 
-    // refactoring for repeatitive code
+    // refactoring for repetitive code
     @BeforeEach
     public void setup() {
 
@@ -25,7 +25,7 @@ class RestaurantServiceTest {
 
     }
 
-    //>>>>>>>>>>>>>>>>>>>>>>SEARCHING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SEARCH BEGINS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     @Test
     public void searching_for_existing_restaurant_should_return_expected_restaurant_object()
             throws RestaurantNotFoundException {
@@ -80,10 +80,31 @@ class RestaurantServiceTest {
 
 
     }
-    //<<<<<<<<<<<<<<<<<<<<SEARCHING>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SEARCH ENDS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+    //<<<<<<<<<<<<<<<<<<<<<<<<USER: ORDERING FOOD ITEMS BEGINS HERE>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    //>>>>>>>>>>>>>>>>>>>>>>ADMIN: ADDING & REMOVING RESTAURANTS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void ordering_food_items_should_give_correct_order_total() {
+
+        // mocking RestaurantService class
+        objRestaurantService = Mockito.mock(RestaurantService.class);
+
+        // ordering two food items from menu
+        objRestaurantService.orderedFoodItems.add("Sweet corn soup", 119);
+        objRestaurantService.orderedFoodItems.add("Vegetable lasagne", 269);
+
+        // mocking method to get order total
+        Mockito.when(objRestaurantService.orderTotal().thenReturn(sum));
+
+        // using assertion for correct order total test case
+        assertThat(sum, 388);
+
+    }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<USER: ORDERING FOOD ITEMS ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //<<<<<<<<<<<<<<ADMIN: ADDING OR/AND REMOVING RESTAURANTS BEGINS HERE>>>>>>>>>>>>>>>>>>>
     @Test
     public void remove_restaurant_should_reduce_list_of_restaurants_size_by_1()
             throws RestaurantNotFoundException {
@@ -98,13 +119,19 @@ class RestaurantServiceTest {
         objRestaurant.addToMenu("Sweet corn soup",119);
         objRestaurant.addToMenu("Vegetable lasagne", 269);
 
-
+        /* getting the size of restaurant dynamic array
+        * to check way forward
+        * if the dynamic array size reduces
+        * when a restaurant element is removed */
         int initialNumberOfRestaurants = service.getRestaurants().size();
 
-        service.removeRestaurant("Amelie's cafe");
+        // removing restaurant element from dynamic array
+        objRestaurantService.removeRestaurant("Amelie's cafe");
 
-        assertEquals(initialNumberOfRestaurants-1,
-                service.getRestaurants().size());
+        /* using assertion for
+        * dynamic array's size reduction test case */
+        assertEquals(initialNumberOfRestaurants - 1,
+                objRestaurantService.getRestaurants().size());
 
     }
 
@@ -122,6 +149,9 @@ class RestaurantServiceTest {
         objRestaurant.addToMenu("Sweet corn soup",119);
         objRestaurant.addToMenu("Vegetable lasagne", 269);
 
+        /* using assertion for
+        * restaurant does not exist
+        * in dynamic array test case  */
         assertThrows(RestaurantNotFoundException.class,
                 ()->service.removeRestaurant("Pantry d'or"));
 
@@ -152,6 +182,6 @@ class RestaurantServiceTest {
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<ADMIN: ADDING & REMOVING RESTAURANTS>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<ADMIN: ADDING OR/AND REMOVING RESTAURANTS ENDS HERE>>>>>>>>>>>>>>>>>>>>
 
 }

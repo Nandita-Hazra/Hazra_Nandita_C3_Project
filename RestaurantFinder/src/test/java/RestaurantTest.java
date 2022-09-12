@@ -12,7 +12,7 @@ class RestaurantTest {
     // declaring class variable
     Restaurant objRestaurant;
 
-    // refactoring for repeatitive code
+    // refactoring for repetitive code
     @BeforeEach
     public void setup() {
 

@@ -2,13 +2,16 @@
 public class Item {
 
     // declaration of variables
-    private String name; // name of food items
-    private int price; // price of food items
+    private String name; // name of food item
+    private int price; // price of food item
 
-    // constructor
+    // constructor of Item class
     public Item(String name, int price) {
+
         this.name = name;
+
         this.price = price;
+
     }
 
     // method to get food item name
@@ -31,5 +34,3 @@ public class Item {
 
     }
 }
-
-
