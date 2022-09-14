@@ -5,11 +5,11 @@ import java.util.List;
 
 public class RestaurantService {
     // creating dynamic array of restaurants using List interface
-    private static List<Restaurant> restaurants = new ArrayList<>();
+    private static final List<Restaurant> restaurants = new ArrayList<>();
 
-    // creating dynamic array of food items using List interface
-    private static List<Item> foodItems = new ArrayList<>();
-
+    public RestaurantService() {
+        orderedFoodItems = new ArrayList<>();
+    }
 
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SEARCH BEGINS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -48,24 +48,38 @@ public class RestaurantService {
      * and find out how much they will be spending. */
 
     // dynamic array for the food item(s) ordered
-    private List<Item> orderedFoodItems = new ArrayList<Item>();
+    public List<Item> orderedFoodItems;
+
+    /* method to order food items
+     * from menu by user
+     */
+    public void addToOrderedList(String name, int price) {
+
+        Item newItem = new Item(name, price);
+
+        orderedFoodItems.add(newItem);
+
+    }
+
 
     // method to sum price of ordered food items
-    public List<Item> orderTotal() {
+    public int orderTotal() {
+
+        int sum = 0;
 
         /* for each loop to iterate forward
         * in List interface */
         for(Item foodItem: orderedFoodItems) {
 
             // adding up price of ordered food items
-            int sum = sum + foodItem.price;
+            sum = sum + foodItem.price;
 
         }
 
         // display order total
         System.out.println(
                 "Your order will cost: Rs."
-                + sum;
+                + sum
         );
 
         return sum;
@@ -79,7 +93,7 @@ public class RestaurantService {
     /* method to add a new restaurant
     * in List interface
     * by admin */
-    public Restaurant addRestaurant(String name,
+    public void addRestaurant(String name,
                                     String location,
                                     LocalTime openingTime,
                                     LocalTime closingTime) {
@@ -94,23 +108,18 @@ public class RestaurantService {
         // adding new Restaurant object to List interface
         restaurants.add(newRestaurant);
 
-        return newRestaurant;
-
     }
 
     /* method to remove an existing restaurant
     * from List interface
     * by admin */
-    public Restaurant removeRestaurant(String restaurantName)
-            throws RestaurantNotFoundException {
+    public void removeRestaurant(String restaurantName) {
 
         // class variable
         Restaurant restaurantToBeRemoved = findRestaurantByName(restaurantName);
 
         // removing object from List interface
         restaurants.remove(restaurantToBeRemoved);
-
-        return restaurantToBeRemoved;
 
     }
 

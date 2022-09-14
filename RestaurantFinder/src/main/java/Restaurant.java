@@ -6,13 +6,13 @@ import java.util.List;
 public class Restaurant {
 
     // declaration of variables
-    private String name; // name of the restaurant
-    private String location; // location of the restaurant
+    private final String name; // name of the restaurant
+    private final String location; // location of the restaurant
     public LocalTime openingTime; // opening time of the restaurant
     public LocalTime closingTime; // closing time of the restaurant
 
     // List interface for the food item(s) in menu
-    private List<Item> menu = new ArrayList<Item>();
+    private final List<Item> menu = new ArrayList<>();
 
     // creating constructor of Restaurant class
     public Restaurant(String name,
@@ -58,7 +58,7 @@ public class Restaurant {
     }
 
     // method to get the food menu
-    public getMenu() {
+    public List<Item> getMenu() {
 
         return menu;
 
@@ -91,7 +91,7 @@ public class Restaurant {
      */
     public void addToMenu(String name, int price) {
 
-        Item newItem = new Item(name,price);
+        Item newItem = new Item(name, price);
 
         menu.add(newItem);
 
@@ -116,20 +116,6 @@ public class Restaurant {
     }
 
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    /* method to print
-     * restaurant details and
-     * menu food details
-     */
-    public void displayDetails() {
-
-        System.out.println("Restaurant:" + name + "\n"
-                + "Location:" + location + "\n"
-                + "Opening time:" + openingTime + "\n"
-                + "Closing time:" + closingTime + "\n"
-                + "Menu:" + "\n" + getMenu());
-
-    }
 
     // method to return name of the restaurant
     public String getName() {

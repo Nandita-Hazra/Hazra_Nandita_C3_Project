@@ -1,8 +1,13 @@
 // importing required classes
 import java.time.LocalTime;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 // mocking to be used for unit testing
 @ExtendWith(MockitoExtension.class)
@@ -10,21 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class RestaurantTest {
 
     // declaring class variable
-    Restaurant objRestaurant;
+    Restaurant restaurantMock;
 
-    // refactoring for repetitive code
-    @BeforeEach
-    public void setup() {
-
-        // setting restaurant's opening time
-        LocalTime openingTime = LocalTime.parse("10:30:00");
-
-        // setting restaurant's closing time
-        LocalTime closingTime = LocalTime.parse("22:00:00");
-
-    }
-
-    //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Test
     public void is_restaurant_open_should_return_true_if_time_is_between_opening_and_closing_time(){
@@ -33,16 +26,16 @@ class RestaurantTest {
         LocalTime currentTime = LocalTime.parse("12:30:15");
 
         // mocking Restaurant class
-        objRestaurant = Mockito.mock(Restaurant.class);
+        restaurantMock = mock(Restaurant.class);
 
-        // mocking method to get current time
-        Mockito.when(objRestaurant.getCurrentTime()).thenReturn(currentTime);
+        // mocking method to test current time
+        when(restaurantMock.getCurrentTime()).thenReturn(currentTime);
 
         // using mocked Restaurant class's method to check if restaurant is open
-        boolean restaurantOpen = objRestaurant.isRestaurantOpen();
+        boolean restaurantOpen = restaurantMock.isRestaurantOpen();
 
         // using assertion for the restaurant open test case
-        assertThat(restaurantOpen, equals(true));
+        assert restaurantOpen: true; // assert statement uses boolean value
 
     }
 
@@ -53,90 +46,91 @@ class RestaurantTest {
         LocalTime currentTime = LocalTime.parse("08:40:56");
 
         // mocking Restaurant class
-        objRestaurant = Mockito.mock(Restaurant.class);
+        restaurantMock = mock(Restaurant.class);
 
-        // mocking method to get current time
-        Mockito.when(objRestaurant.getCurrentTime()).thenReturn(currentTime);
+        // mocking method to test current time
+        when(restaurantMock.getCurrentTime()).thenReturn(currentTime);
 
         // using mocked Restaurant class's method to check if restaurant is open
-        boolean restaurantOpen = objRestaurant.isRestaurantOpen();
+        boolean restaurantOpen = restaurantMock.isRestaurantOpen();
 
         // using assertion for the restaurant close test case
-        assertThat(restaurantOpen, equals(false));
+        assert restaurantOpen: false; // assert statement uses boolean value
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<<<<<OPEN/CLOSED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<<<<<OPEN/CLOSED TEST ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>MENU<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>MENU TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Test
-    public void adding_item_to_menu_should_increase_menu_size_by_1(){
+    public void adding_item_to_menu_should_increase_menu_size_by_1(LocalTime closingTime, LocalTime openingTime){
 
         // creating object of Restaurant class
-        objRestaurant = new Restaurant("Amelie's cafe",
+        restaurantMock = new Restaurant("Amelie's cafe",
                                         "Chennai",
                                                 openingTime,
                                                 closingTime);
 
         // adding two food items to menu
-        objRestaurant.addToMenu("Sweet corn soup",119);
-        objRestaurant.addToMenu("Vegetable lasagne", 269);
+        restaurantMock.addToMenu("Sweet corn soup",119);
+        restaurantMock.addToMenu("Vegetable lasagne", 269);
 
         // determining the size of menu
-        int initialMenuSize = restaurant.getMenu().size();
+        int initialMenuSize;
+        initialMenuSize = restaurantMock.getMenu().size();
 
         // adding one more food item to menu
-        objRestaurant.addToMenu("Sizzling brownie",319);
+        restaurantMock.addToMenu("Sizzling brownie",319);
 
         // using assertion for increase in menu's size
         assertEquals(initialMenuSize + 1,
-                    objRestaurant.getMenu().size());
+                    restaurantMock.getMenu().size());
 
     }
 
 
     @Test
-    public void removing_item_from_menu_should_decrease_menu_size_by_1() throws ItemNotFoundException {
+    public void removing_item_from_menu_should_decrease_menu_size_by_1(LocalTime openingTime, LocalTime closingTime) throws ItemNotFoundException {
 
         // creating object of Restaurant class
-        objRestaurant = new Restaurant("Amelie's cafe",
+        restaurantMock = new Restaurant("Amelie's cafe",
                 "Chennai",
                 openingTime,
                 closingTime);
 
         // adding two food items to menu
-        objRestaurant.addToMenu("Sweet corn soup",119);
-        objRestaurant.addToMenu("Vegetable lasagne", 269);
+        restaurantMock.addToMenu("Sweet corn soup",119);
+        restaurantMock.addToMenu("Vegetable lasagne", 269);
 
         // determining the size of menu
-        int initialMenuSize = restaurant.getMenu().size();
+        int initialMenuSize = restaurantMock.getMenu().size();
 
         // removing one food item from menu
-        objRestaurant.removeFromMenu("Vegetable lasagne");
+        restaurantMock.removeFromMenu("Vegetable lasagne");
 
         // using assertion for decrease in menu's size
         assertEquals(initialMenuSize-1,
-                objRestaurant.getMenu().size());
+                restaurantMock.getMenu().size());
 
     }
 
     @Test
-    public void removing_item_that_does_not_exist_should_throw_exception() {
+    public void removing_item_that_does_not_exist_should_throw_exception(LocalTime openingTime, LocalTime closingTime) {
 
         // creating object of Restaurant class
-        objRestaurant = new Restaurant("Amelie's cafe",
+        restaurantMock = new Restaurant("Amelie's cafe",
                 "Chennai",
                 openingTime,
                 closingTime);
 
         // adding two food items to menu
-        objRestaurant.addToMenu("Sweet corn soup",119);
-        objRestaurant.addToMenu("Vegetable lasagne", 269);
+        restaurantMock.addToMenu("Sweet corn soup",119);
+        restaurantMock.addToMenu("Vegetable lasagne", 269);
 
         assertThrows(ItemNotFoundException.class,
-                ()->objRestaurant.removeFromMenu("French fries"));
+                ()->restaurantMock.removeFromMenu("French fries"));
 
     }
 

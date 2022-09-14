@@ -2,8 +2,8 @@
 public class Item {
 
     // declaration of variables
-    private String name; // name of food item
-    private int price; // price of food item
+    public String name; // name of food item
+    public int price; // price of food item
 
     // constructor of Item class
     public Item(String name, int price) {
