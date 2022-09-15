@@ -49,15 +49,8 @@ class RestaurantServiceTest {
         String restaurantNameAsPresent
                 = String.valueOf(restaurantServiceMock.findRestaurantByName(restaurantName));
 
-        // setting the restaurant exist flag
-        boolean restaurantExist = false;
-
-        // condition to check if restaurant exists or not
-        if (restaurantNameAsPresent != NULL) {
-
-            restaurantExist = true;
-
-        }
+        // setting the restaurant exist flag using simplified if statement
+        boolean restaurantExist = (restaurantNameAsPresent != NULL);
 
         // using assertion for the restaurant exists case
         assert restaurantExist: true;
