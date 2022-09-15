@@ -1,3 +1,19 @@
+/* Java program to demonstrate unit testing of RestaurantService.java.
+*
+* Unit testing will be done by using the concept of mocking.
+*
+* A. Following are the test cases for search functionality:
+*       1. On search, restaurant exists and therefore returns restaurant's details.
+*       2. On search, restaurant does not exist and therefore throws exception.
+*
+* B. Test case for checking correct order total for ordered food items.
+*
+* C. Following are the test cases for adding and/or removing restaurant functionality:
+*       1. Removing restaurant decreases the dynamic array size.
+*       2. Exception will be thrown for non-existent restaurant's removal.
+*       3. Adding restaurant increases the dynamic array size.
+* */
+
 // importing required classes
 import java.time.LocalTime;
 
@@ -16,7 +32,7 @@ import static org.mockito.Mockito.mock;
 
 class RestaurantServiceTest {
 
-    // declaring class variable
+    // declaring class variables
     Restaurant restaurantMock;
     RestaurantService restaurantServiceMock;
 
@@ -56,26 +72,13 @@ class RestaurantServiceTest {
         // mocking RestaurantService class
         restaurantServiceMock = mock(RestaurantService.class);
 
-        // using mocked RestaurantService class's method to check if restaurant exist
-        String restaurantNameAsPresent
-                = String.valueOf(restaurantServiceMock.findRestaurantByName(restaurantName));
-
-
-        // setting the restaurant exist flag
-        boolean restaurantExist = false;
-
-        // condition to check if restaurant exists or not
-        if (restaurantNameAsPresent != NULL) {
-
-            restaurantExist = true;
-
-        }
-
-        // using assertion for the restaurant not exists case
-        assert restaurantExist: false;
-
+            /* using assertion to throw exception for
+             * restaurant does not exist in dynamic array test case  */
+            assertThrows(RestaurantNotFoundException.class,
+                    ()->restaurantServiceMock.findRestaurantByName(restaurantName));
 
     }
+
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SEARCH ENDS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     //<<<<<<<<<<<<<<<<<<<<<<<<USER: ORDERING FOOD ITEMS BEGINS HERE>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -110,13 +113,10 @@ class RestaurantServiceTest {
                 openingTime,
                 closingTime);
 
-        /* getting the size of restaurant dynamic array
-        * to check way forward
-        * if the dynamic array size reduces
-        * when a restaurant element is removed */
+        // getting the dynamic array size to know the number of restaurants present
         int initialNumberOfRestaurants = restaurantServiceMock.getRestaurants().size();
 
-        // removing restaurant element from dynamic array
+        // removing restaurant from dynamic array
         restaurantServiceMock.removeRestaurant("Amelie's cafe");
 
         /* using assertion for
@@ -152,6 +152,7 @@ class RestaurantServiceTest {
                 openingTime,
                 closingTime);
 
+        // getting the dynamic array size to know the number of restaurants present
         int initialNumberOfRestaurants = restaurantServiceMock.getRestaurants().size();
 
         restaurantServiceMock.addRestaurant("Pumpkin Tales",
