@@ -1,8 +1,17 @@
+/* Java program of restaurant details.
+* This program does the following:
+* 1. Checks the open/close status of restaurant.
+* 2. Searches the menu of a given restaurant for food items.
+* 3. Admin can add or/and remove food items from the menu of a given restaurant.
+* */
+
 // importing required classes
 import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
+// class of restaurant's details
 public class Restaurant {
 
     // declaration of variables
@@ -10,9 +19,6 @@ public class Restaurant {
     private final String location; // location of the restaurant
     public LocalTime openingTime; // opening time of the restaurant
     public LocalTime closingTime; // closing time of the restaurant
-
-    // List interface for the food item(s) in menu
-    private final List<Item> menu = new ArrayList<>();
 
     // creating constructor of Restaurant class
     public Restaurant(String name,
@@ -27,6 +33,8 @@ public class Restaurant {
 
     }
 
+    //<<<<<<<<<<<<<<<<<<<RESTAURANT'S OPEN/CLOSE STATUS BEGINS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     // method to check if restaurant is open
     public boolean isRestaurantOpen() {
 
@@ -34,17 +42,18 @@ public class Restaurant {
         LocalTime currentTime = getCurrentTime();
 
         /* checking if the current time
-         * is between opening and closing time */
+         * is between opening and closing time,
+         * to know that the restaurant is open or close */
         if (currentTime.isAfter(openingTime)
                 &&
                 currentTime.isBefore(closingTime)) {
 
-            return true;
+            return true; // restaurant is open
 
         }
         else {
 
-            return false;
+            return false; // restaurant is close
 
         }
 
@@ -57,10 +66,24 @@ public class Restaurant {
 
     }
 
+    //<<<<<<<<<<<<<<<<<<<RESTAURANT'S OPEN/CLOSE STATUS ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //<<<<<<<<<<<<<<<<<<<<<<<FOOD ITEMS SEARCH STARTS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // List interface for the food item(s) in menu
+    private final List<Item> menu = new ArrayList<>();
+
     // method to get the food menu
     public List<Item> getMenu() {
 
         return menu;
+
+    }
+
+    // method to get name of the restaurant
+    public String getName() {
+
+        return name;
 
     }
 
@@ -74,9 +97,11 @@ public class Restaurant {
         for(Item item: menu) {
 
             // check condition using food name
-            if (item.getName().equals(itemName))
+            if (item.getName().equals(itemName)) {
 
                 return item;
+
+            }
 
         }
 
@@ -84,9 +109,11 @@ public class Restaurant {
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<<<FOOD ITEMS SEARCH ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    /* method to add food details
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS BEGINS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    /* method to add food items
      * in menu by admin
      */
     public void addToMenu(String name, int price) {
@@ -97,7 +124,7 @@ public class Restaurant {
 
     }
 
-    /* method to remove food details
+    /* method to remove food items
      * from menu by admin
      */
     public void removeFromMenu(String itemName) throws ItemNotFoundException {
@@ -115,13 +142,6 @@ public class Restaurant {
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    // method to return name of the restaurant
-    public String getName() {
-
-        return name;
-
-    }
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<ADMIN JOBS ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 }

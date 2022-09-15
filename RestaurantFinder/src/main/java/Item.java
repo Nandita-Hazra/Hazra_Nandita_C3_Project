@@ -1,3 +1,7 @@
+/* Java program to
+* have food items in menu.
+* */
+
 // class of food items in menu
 public class Item {
 

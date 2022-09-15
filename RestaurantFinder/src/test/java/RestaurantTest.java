@@ -1,3 +1,17 @@
+/* Java program to demonstrate unit testing of Restaurant.class.
+*
+* Unit testing will be done by using the concept of mocking.
+*
+* A. Following are the test case for restaurant's open/close status:
+*       1. Restaurant is open if current time is within opening and closing time.
+*       2. Restaurant is close if current time is outside opening and closing time.
+*
+* B. Following are the test case for restaurant's menu:
+*       1. Adding food item in menu should increase the size of dynamic array.
+*       2. Removing food item from menu should decrease the size of dynamic array.
+*       3. Removing a non-existent food item of menu will throw an exception.
+*  */
+
 // importing required classes
 import java.time.LocalTime;
 
@@ -12,12 +26,13 @@ import static org.mockito.Mockito.when;
 // mocking to be used for unit testing
 @ExtendWith(MockitoExtension.class)
 
+// main class
 class RestaurantTest {
 
     // declaring class variable
     Restaurant restaurantMock;
 
-    //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //>>>>>>>>>>>>>>>>>>>>>>>RESTAURANT'S OPEN/CLOSE STATUS TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Test
     public void is_restaurant_open_should_return_true_if_time_is_between_opening_and_closing_time(){
@@ -59,10 +74,10 @@ class RestaurantTest {
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<<<<<OPEN/CLOSED TEST ENDS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //>>>>>>>>>>>>>>>>>>>>>>>RESTAURANT'S OPEN/CLOSE STATUS TEST ENDS HERE<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>MENU TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //>>>>>>>>>>>>>>>>>>>>>>>ADDING/REMOVING IN/FROM MENU TEST BEGINS HERE<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Test
     public void adding_item_to_menu_should_increase_menu_size_by_1(LocalTime closingTime, LocalTime openingTime){
@@ -100,10 +115,6 @@ class RestaurantTest {
                 openingTime,
                 closingTime);
 
-        // adding two food items to menu
-        restaurantMock.addToMenu("Sweet corn soup",119);
-        restaurantMock.addToMenu("Vegetable lasagne", 269);
-
         // determining the size of menu
         int initialMenuSize = restaurantMock.getMenu().size();
 
@@ -125,15 +136,11 @@ class RestaurantTest {
                 openingTime,
                 closingTime);
 
-        // adding two food items to menu
-        restaurantMock.addToMenu("Sweet corn soup",119);
-        restaurantMock.addToMenu("Vegetable lasagne", 269);
-
         assertThrows(ItemNotFoundException.class,
                 ()->restaurantMock.removeFromMenu("French fries"));
 
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //>>>>>>>>>>>>>>>>>>>>>>>ADDING/REMOVING IN/FROM MENU TEST ENDS HERE<<<<<<<<<<<<<<<<<<<<<<<<<
 
 }
